@@ -14,8 +14,7 @@ while (true)
     }
     try
     {
-        Converter converter = new Converter();
-        double convertedAmount = converter.Convert(baseCurrency, targetCurrency, amount);
+        double convertedAmount = Converter.Instance.Convert(baseCurrency, targetCurrency, amount);
         Console.WriteLine($"{amount} {baseCurrency} is equal to {convertedAmount} {targetCurrency}");
     }
     catch (Exception ex)

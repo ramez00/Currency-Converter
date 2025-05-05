@@ -2,7 +2,29 @@
 public class Converter
 {
     private IEnumerable<ExchangeRate> _exchangRate;
-    public Converter()
+
+    private static Lazy<Converter> _instance; // Lazy initialization
+
+    private static readonly object _lock = new(); // Lock object for thread safety
+
+    //private static Converter _instance = new(); // Eager initialization
+
+    public static Converter Instance
+    {
+        get
+        {
+            lock (_lock) // Ensure thread safety
+            {
+                if (_instance == null)
+                {
+                    _instance = new Lazy<Converter>(() => new Converter());
+                }
+                return _instance.Value;
+            }
+        }
+    }
+
+    private Converter()
     {
         LoadExchange();
     }
